@@ -1,0 +1,377 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: Inter, Segoe UI, Roboto, sans-serif;
+  letter-spacing: 0.1px;
+  line-height: 1.45;
+  color: var(--mantine-color-text);
+}
+
+[data-mantine-color-scheme='dark'] {
+  --mantine-color-body: #000000;
+}
+
+[data-mantine-color-scheme='light'] {
+  --mantine-color-body: #ffffff;
+}
+
+.app-shell {
+  background-attachment: fixed;
+}
+
+/* Apply full transparency across ALL Mantine Cards and Papers globally */
+.mantine-Paper-root {
+  background: rgba(255, 255, 255, 0.04) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04) !important;
+}
+
+[data-mantine-color-scheme='dark'] .mantine-Paper-root {
+  background: rgba(0, 0, 0, 0.2) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3) !important;
+}
+
+.glass-panel {
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+[data-mantine-color-scheme='dark'] .glass-panel {
+  background: transparent !important;
+  border: none !important;
+}
+
+.section-surface {
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  box-shadow: 0 6px 24px rgba(15, 23, 42, 0.05) !important;
+}
+
+.section-alt {
+  background: transparent !important;
+  border: transparent !important;
+}
+
+[data-mantine-color-scheme='dark'] .section-surface {
+  background: rgba(0, 0, 0, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3) !important;
+}
+
+.hero-title {
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+  font-weight: 800;
+}
+
+.gradient-text {
+  background: linear-gradient(130deg, #4f46e5 0%, #6366f1 35%, #7c3aed 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.filter-input,
+.filter-select {
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+
+.filter-input input,
+.filter-select input {
+  background: rgba(0, 0, 0, 0.05) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(0, 0, 0, 0.15) !important;
+  color: inherit !important;
+  transition: all 0.2s ease;
+}
+
+[data-mantine-color-scheme='dark'] .filter-input input,
+[data-mantine-color-scheme='dark'] .filter-select input {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.filter-input:focus-within input,
+.filter-select:focus-within input {
+  background: rgba(0, 0, 0, 0.1) !important;
+  border-color: #6366f1 !important;
+}
+
+[data-mantine-color-scheme='dark'] .filter-input:focus-within input,
+[data-mantine-color-scheme='dark'] .filter-select:focus-within input {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border-color: #818cf8 !important;
+}
+
+/* Make Dropdown Select Popups Glassy too */
+.mantine-Select-dropdown {
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+}
+
+[data-mantine-color-scheme='dark'] .mantine-Select-dropdown {
+  background: rgba(15, 23, 42, 0.7) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important;
+}
+
+.filter-input:focus-within,
+.filter-select:focus-within {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.18);
+}
+
+[data-mantine-color-scheme='dark'] .filter-input:focus-within,
+[data-mantine-color-scheme='dark'] .filter-select:focus-within {
+  box-shadow: 0 8px 24px rgba(129, 140, 248, 0.25);
+}
+
+.navbar-shell {
+  transition: backdrop-filter 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+.navbar-shell[data-scrolled='true'] {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.1);
+}
+
+.top-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  background: rgba(255, 255, 255, 0.02) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  transition: box-shadow 0.24s ease, backdrop-filter 0.24s ease, background-color 0.24s ease;
+}
+
+[data-mantine-color-scheme='dark'] .top-navbar {
+  background: rgba(0, 0, 0, 0.15) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.top-navbar[data-scrolled='true'] {
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+[data-mantine-color-scheme='dark'] .top-navbar[data-scrolled='true'] {
+  background: rgba(0, 0, 0, 0.25) !important;
+}
+
+.top-navbar-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 12px 24px;
+}
+
+.navbar-brand-slot {
+  min-width: 210px;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar-flag {
+  width: 24px;
+  height: 24px;
+  object-fit: cover;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--mantine-color-default-border), transparent 25%);
+}
+
+.inline-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.inline-link:hover {
+  text-decoration: underline;
+}
+
+.place-card video {
+  border-radius: 12px;
+}
+
+.navbar-search {
+  flex: 1;
+  min-width: 240px;
+  max-width: 520px;
+}
+
+.navbar-region {
+  width: 160px;
+}
+
+.navbar-sort {
+  width: 150px;
+}
+
+.theme-toggle {
+  transition: transform 0.22s ease, background-color 0.22s ease;
+}
+
+.country-card {
+  overflow: hidden;
+  position: relative;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.07);
+}
+
+.country-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(130deg, rgba(79, 70, 229, 0.14), rgba(124, 58, 237, 0.12));
+  opacity: 0;
+  transition: opacity 0.24s ease;
+  pointer-events: none;
+}
+
+.country-card:hover::before {
+  opacity: 1;
+}
+
+.card-flag-wrap {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.hero-preview-card {
+  background: transparent;
+  border: 1px solid color-mix(in oklab, var(--mantine-color-default-border), transparent 42%);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+.top-footer {
+  width: 100%;
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  background: rgba(255, 255, 255, 0.02) !important;
+}
+
+[data-mantine-color-scheme='dark'] .top-footer {
+  background: rgba(0, 0, 0, 0.1) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.top-footer-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 12px 24px;
+}
+
+.split-country-card {
+  text-decoration: none;
+  color: inherit;
+  background: rgba(255, 255, 255, 0.04) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06) !important;
+}
+
+.split-country-inner {
+  display: grid;
+  gap: 1.25rem;
+  align-items: stretch;
+  grid-template-columns: minmax(220px, 1.2fr) minmax(240px, 1fr);
+}
+
+.split-country-card.is-reversed .split-country-inner {
+  grid-template-columns: minmax(240px, 1fr) minmax(220px, 1.2fr);
+}
+
+.split-country-card.is-reversed .split-country-image {
+  order: 2;
+}
+
+.split-country-card.is-reversed .split-country-content {
+  order: 1;
+}
+
+.split-country-image {
+  min-height: 220px;
+}
+
+.split-country-image img {
+  aspect-ratio: 16 / 9;
+}
+
+[data-mantine-color-scheme='dark'] .split-country-card,
+[data-mantine-color-scheme='dark'] .country-card {
+  background: rgba(0, 0, 0, 0.2) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25) !important;
+}
+
+@media (max-width: 992px) {
+  .top-navbar-inner {
+    padding: 12px 16px;
+  }
+
+  .navbar-search {
+    order: 3;
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  .navbar-brand-slot {
+    min-width: auto;
+  }
+
+  .navbar-region {
+    width: 140px;
+  }
+
+  .navbar-sort {
+    width: 140px;
+  }
+
+  .top-footer-inner {
+    padding: 12px 16px;
+  }
+
+  .split-country-inner,
+  .split-country-card.is-reversed .split-country-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .split-country-card.is-reversed .split-country-image,
+  .split-country-card.is-reversed .split-country-content {
+    order: initial;
+  }
+}
+
+ canvas { outline: none !important; border: none !important; } 
+
