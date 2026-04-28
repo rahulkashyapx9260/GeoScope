@@ -115,11 +115,96 @@ export default function CountryDetailsPage() {
 
   if (isLoading) return (
     <Stack gap="lg" className="detail-page-wrap">
-      <Skeleton height={20} width={250} />
-      <Skeleton height={36} width={80} />
-      <Skeleton height={350} radius="lg" />
-      <Skeleton height={40} />
-      <Skeleton height={250} radius="md" />
+      <AppBreadcrumbs items={[{ label: 'Home', to: '/' }, { label: 'Loading...' }]} />
+      <Group>
+        <Button component={Link} to="/" leftSection={<IconArrowLeft size={16} />} variant="default" disabled>
+          Back
+        </Button>
+      </Group>
+
+      <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}>
+        <Card radius="lg" padding="lg" className="glass-panel">
+          <SimpleGrid cols={{ base: 1, md: 2 }} spacing="xl">
+            <Skeleton height="100%" minHeight={300} radius="md" />
+            <Stack>
+              <Group align="center">
+                <Skeleton height={38} width="60%" radius="md" />
+                <Skeleton height={24} width={80} radius="xl" />
+              </Group>
+
+              <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="sm">
+                <Paper className="glass-panel" p="sm" radius="md">
+                  <Group gap="xs" mb={4}>
+                    <IconUsers size={16} />
+                    <Text size="xs" c="dimmed">Population</Text>
+                  </Group>
+                  <Skeleton height={24} width="50%" radius="md" />
+                </Paper>
+                <Paper className="glass-panel" p="sm" radius="md">
+                  <Group gap="xs" mb={4}>
+                    <IconRuler2 size={16} />
+                    <Text size="xs" c="dimmed">Area (km²)</Text>
+                  </Group>
+                  <Skeleton height={24} width="50%" radius="md" />
+                </Paper>
+              </SimpleGrid>
+
+              <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="sm">
+                <Paper className="glass-panel" p="sm" radius="md">
+                  <Group gap="xs" mb={4}>
+                    <IconBuilding size={16} />
+                    <Text size="xs" c="dimmed">Capital</Text>
+                  </Group>
+                  <Skeleton height={24} width="50%" radius="md" />
+                </Paper>
+                <Paper className="glass-panel" p="sm" radius="md">
+                  <Group gap="xs" mb={4}>
+                    <IconWorld size={16} />
+                    <Text size="xs" c="dimmed">Region</Text>
+                  </Group>
+                  <Skeleton height={24} width="50%" radius="md" />
+                </Paper>
+              </SimpleGrid>
+              
+              <Button variant="light" radius="xl" w="fit-content" disabled>
+                <IconMap size={16} style={{ marginRight: 8 }} />
+                Open in Google Maps
+              </Button>
+            </Stack>
+          </SimpleGrid>
+        </Card>
+      </motion.div>
+
+      <Tabs defaultValue="overview" radius="md">
+        <Tabs.List>
+          <Tabs.Tab value="overview">Overview</Tabs.Tab>
+          <Tabs.Tab value="states" disabled>States</Tabs.Tab>
+          <Tabs.Tab value="culture" disabled>Culture</Tabs.Tab>
+          <Tabs.Tab value="places" disabled>Places</Tabs.Tab>
+          <Tabs.Tab value="media" leftSection={<IconPhoto size={16} />} disabled>
+            Media
+          </Tabs.Tab>
+        </Tabs.List>
+
+        <Tabs.Panel value="overview" pt="md">
+          <Paper className="glass-panel" p="lg" radius="md">
+            <Stack gap="md">
+              <Title order={3}>About Country</Title>
+              <Stack gap="sm">
+                <Skeleton height={14} radius="xl" />
+                <Skeleton height={14} radius="xl" width="80%" />
+                <Skeleton height={14} radius="xl" width="90%" />
+              </Stack>
+              <Title order={4}>History</Title>
+              <Stack gap="sm">
+                <Skeleton height={14} radius="xl" />
+                <Skeleton height={14} radius="xl" />
+                <Skeleton height={14} radius="xl" width="60%" />
+              </Stack>
+            </Stack>
+          </Paper>
+        </Tabs.Panel>
+      </Tabs>
     </Stack>
   )
   if (isError) return <ErrorState message={error.message} onRetry={refetch} />
@@ -225,18 +310,36 @@ export default function CountryDetailsPage() {
           <Paper className="glass-panel" p="lg" radius="md">
             <Stack gap="md">
               <Title order={3}>About Country</Title>
-              <Text c="dimmed">
-                {wikiQuery.isSuccess
-                  ? wikiQuery.data.summary
-                  : 'Summary is currently unavailable. Showing core country information.'}
-              </Text>
+              {wikiQuery.isLoading ? (
+                <Stack gap="sm">
+                  <Skeleton height={14} radius="xl" />
+                  <Skeleton height={14} radius="xl" width="80%" />
+                  <Skeleton height={14} radius="xl" width="90%" />
+                </Stack>
+              ) : (
+                <Text c="dimmed">
+                  {wikiQuery.isSuccess
+                    ? wikiQuery.data.summary
+                    : 'Summary is currently unavailable. Showing core country information.'}
+                </Text>
+              )}
               <Title order={4}>History</Title>
-              <Text c="dimmed">
-                {wikiQuery.isSuccess
-                  ? wikiQuery.data.history
-                  : 'History information is unavailable right now. Please try again later.'}
-              </Text>
-              {wikiQuery.isSuccess && wikiQuery.data.extra ? (
+              {wikiQuery.isLoading ? (
+                <Stack gap="sm">
+                  <Skeleton height={14} radius="xl" />
+                  <Skeleton height={14} radius="xl" />
+                  <Skeleton height={14} radius="xl" width="60%" />
+                </Stack>
+              ) : (
+                <Text c="dimmed">
+                  {wikiQuery.isSuccess
+                    ? wikiQuery.data.history
+                    : 'History information is unavailable right now. Please try again later.'}
+                </Text>
+              )}
+              {wikiQuery.isLoading ? (
+                <Skeleton height={14} radius="xl" width="70%" />
+              ) : wikiQuery.isSuccess && wikiQuery.data.extra ? (
                 <Text c="dimmed">{wikiQuery.data.extra}</Text>
               ) : null}
             </Stack>
@@ -274,7 +377,11 @@ export default function CountryDetailsPage() {
             </Text>
           </Group>
           <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md">
-            {displayPlaces.length > 0 ? (
+            {placesQuery.isLoading ? (
+              Array.from({ length: 4 }).map((_, i) => (
+                <Skeleton key={i} height={250} radius="md" />
+              ))
+            ) : displayPlaces.length > 0 ? (
               displayPlaces.map((place, index) => (
                 <Paper key={place.name} className="glass-panel place-card" p="md" radius="md">
                   <Stack>
@@ -368,6 +475,7 @@ export default function CountryDetailsPage() {
             title={`Media • ${country.name.common}`}
             images={mediaQuery.data?.images || []}
             videos={mediaQuery.data?.videos || []}
+            isLoading={mediaQuery.isLoading}
           />
         </Tabs.Panel>
       </Tabs>

@@ -100,7 +100,7 @@ export function HeroGlobe() {
           globeImageUrl={imageUrl}
           bumpImageUrl={bumpUrl}
           backgroundColor="rgba(0,0,0,0)"
-          atmosphereColor= "#818cf8" 
+          atmosphereColor="#818cf8"
           atmosphereAltitude={isDark ? 0.35 : 0.3}
 
           /* Landmarks (Labels) config */

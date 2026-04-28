@@ -242,3 +242,47 @@ export default function StatePage() {
     </Stack>
   )
 }
+'Data not available'
+                          )}
+                        </Text >
+                        <Text size="sm" c="dimmed">
+                          <IconWorld size={14} style={{ marginRight: 6 }} />
+                          Region:{' '}
+                          {cityDetailsQuery.isLoading ? (
+                            <Skeleton height={14} width={80} display="inline-block" />
+                          ) : (
+                            city.details?.region || 'Data not available'
+                          )}
+                        </Text>
+                        <Link
+                          to={`/country/${countryCode}/state/${encodeURIComponent(decodedStateName)}/city/${encodeURIComponent(
+                            city.name,
+                          )}`}
+                          className="inline-link"
+                        >
+                          <IconMapPin size={14} style={{ marginRight: 6 }} />
+                          View city details
+                        </Link>
+                      </Stack >
+                    </Paper >
+                  ))}
+                </SimpleGrid >
+              ) : (
+  <Text c="dimmed">Data not available</Text>
+)}
+            </Stack >
+          </Paper >
+        </Tabs.Panel >
+
+  <Tabs.Panel value="media" pt="md">
+    <MediaGallery
+      title={`Media • ${decodedStateName}`}
+      images={mediaQuery.data?.images || []}
+      videos={mediaQuery.data?.videos || []}
+      isLoading={mediaQuery.isLoading}
+    />
+  </Tabs.Panel>
+      </Tabs >
+    </Stack >
+  )
+}

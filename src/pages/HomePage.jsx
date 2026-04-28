@@ -66,37 +66,37 @@ export default function HomePage() {
   return (
     <Stack gap={{ base: 'lg', md: 'xl' }} pb="xl" id="home">
 
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, ease: 'easeOut' }}
-        >
-          <SimpleGrid cols={{ base: 1, md: 2 }} spacing="xl" style={{ alignItems: 'center' }}>
-            <Stack gap="md" justify="center" h="100%">
-              <Title className="hero-title" order={1} fz={{ base: 34, md: 56 }}>
-                The World Context
-                <br />
-                <span className="gradient-text">Beautifully. Instantly.</span>
-              </Title>
-              <Text c="dimmed" maw={620}>
-                Interact with the globe and browse countries by region, population, and capital with a clean global explorer.
-              </Text>
-              <Group>
-                <Button
-                  component="a"
-                  href="#explore"
-                  size="md"
-                  radius="xl"
-                  variant="gradient"
-                  gradient={{ from: 'indigo', to: 'grape' }}
-                >
-                  Explore Countries
-                </Button>
-              </Group>
-            </Stack>
-            <HeroGlobe />
-          </SimpleGrid>
-        </motion.div>
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: 'easeOut' }}
+      >
+        <SimpleGrid cols={{ base: 1, md: 2 }} spacing="xl" style={{ alignItems: 'center' }}>
+          <Stack gap="md" justify="center" h="100%">
+            <Title className="hero-title" order={1} fz={{ base: 34, md: 56 }}>
+              The World Context
+              <br />
+              <span className="gradient-text">Beautifully. Instantly.</span>
+            </Title>
+            <Text c="dimmed" maw={620}>
+              Interact with the globe and browse countries by region, population, and capital with a clean global explorer.
+            </Text>
+            <Group>
+              <Button
+                component="a"
+                href="#explore"
+                size="md"
+                radius="xl"
+                variant="gradient"
+                gradient={{ from: 'indigo', to: 'grape' }}
+              >
+                Explore Countries
+              </Button>
+            </Group>
+          </Stack>
+          <HeroGlobe />
+        </SimpleGrid>
+      </motion.div>
 
 
       <div id="explore" />
@@ -116,17 +116,17 @@ export default function HomePage() {
                   : 'A seamless list of nations, instantly searchable.'}
               </Text>
             </div>
-            
+
             {isPristine && <BentoGrid countries={countries} />}
 
             <CountrySplitList countries={filteredCountries.slice(0, displayCount)} />
-            
+
             {filteredCountries.length > displayCount && (
               <Group justify="center" mt="xl">
-                <Button 
-                  size="md" 
-                  radius="xl" 
-                  variant="light" 
+                <Button
+                  size="md"
+                  radius="xl"
+                  variant="light"
                   onClick={() => setDisplayCount((v) => v + 16)}
                 >
                   Load More Countries
