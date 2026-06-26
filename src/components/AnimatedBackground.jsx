@@ -91,8 +91,8 @@ const BackgroundRenderer = memo(({ isDark }) => {
           backgroundImage: isDark
             ? 'radial-gradient(1px 1px at 10% 20%, #ffffff, transparent), radial-gradient(1px 1px at 30% 90%, #ffffff, transparent), radial-gradient(1.5px 1.5px at 70% 30%, rgba(255,255,255,0.6), transparent), radial-gradient(1px 1px at 85% 75%, #ffffff, transparent), radial-gradient(1px 1px at 50% 50%, #ffffff, transparent)'
             : 'radial-gradient(1px 1px at 10% 20%, #000000, transparent), radial-gradient(1px 1px at 30% 90%, #000000, transparent), radial-gradient(1.5px 1.5px at 70% 30%, rgba(0,0,0,0.4), transparent), radial-gradient(1px 1px at 85% 75%, #000000, transparent), radial-gradient(1px 1px at 50% 50%, #000000, transparent)',
-          backgroundSize: '120px 120px', // Significantly increased density
-          opacity: isDark ? 0.8 : 0.4
+          backgroundSize: '400px 400px', // Massive increase to make dots sparse
+          opacity: isDark ? 0.4 : 0.15 // Significantly lowered opacity
         }}
       />
 

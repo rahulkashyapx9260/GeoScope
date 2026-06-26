@@ -186,7 +186,7 @@ body {
 .top-navbar-inner {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 12px 24px;
+  padding: 8px 32px;
 }
 
 .navbar-brand-slot {
@@ -288,7 +288,7 @@ body {
 .top-footer-inner {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 12px 24px;
+  padding: 12px 32px;
 }
 
 .split-country-card {
@@ -373,5 +373,7 @@ body {
   }
 }
 
- canvas { outline: none !important; border: none !important; } 
-
+canvas {
+  outline: none !important;
+  border: none !important;
+}

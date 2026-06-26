@@ -158,13 +158,29 @@ export default function StatePage() {
           <Paper className="glass-panel" p="lg" radius="md">
             <Stack gap="md">
               <Title order={3}>About State</Title>
-              <Text c="dimmed">
-                {wikiQuery.isSuccess ? wikiQuery.data.summary : 'Data not available'}
-              </Text>
+              {wikiQuery.isLoading ? (
+                <Stack gap="sm">
+                  <Skeleton height={14} radius="xl" />
+                  <Skeleton height={14} radius="xl" width="80%" />
+                  <Skeleton height={14} radius="xl" width="90%" />
+                </Stack>
+              ) : (
+                <Text c="dimmed">
+                  {wikiQuery.isSuccess ? wikiQuery.data.summary : 'Data not available'}
+                </Text>
+              )}
               <Title order={4}>Background</Title>
-              <Text c="dimmed">
-                {wikiQuery.isSuccess ? wikiQuery.data.history : 'Data not available'}
-              </Text>
+              {wikiQuery.isLoading ? (
+                <Stack gap="sm">
+                  <Skeleton height={14} radius="xl" />
+                  <Skeleton height={14} radius="xl" width="80%" />
+                  <Skeleton height={14} radius="xl" width="60%" />
+                </Stack>
+              ) : (
+                <Text c="dimmed">
+                  {wikiQuery.isSuccess ? wikiQuery.data.history : 'Data not available'}
+                </Text>
+              )}
             </Stack>
           </Paper>
         </Tabs.Panel>
@@ -200,16 +216,25 @@ export default function StatePage() {
                           <Text fw={700}>{city.name}</Text>
                           <IconMapPin size={16} />
                         </Group>
-                        <Text size="sm" c="dimmed">
+                        <Text size="sm" c="dimmed" component="div">
                           <IconUsers size={14} style={{ marginRight: 6 }} />
                           Population:{' '}
-                          {city.details?.population
-                            ? city.details.population.toLocaleString()
-                            : 'Data not available'}
+                          {cityDetailsQuery.isLoading ? (
+                            <Skeleton height={14} width={60} display="inline-block" />
+                          ) : city.details?.population ? (
+                            city.details.population.toLocaleString()
+                          ) : (
+                            'Data not available'
+                          )}
                         </Text>
-                        <Text size="sm" c="dimmed">
+                        <Text size="sm" c="dimmed" component="div">
                           <IconWorld size={14} style={{ marginRight: 6 }} />
-                          Region: {city.details?.region || 'Data not available'}
+                          Region:{' '}
+                          {cityDetailsQuery.isLoading ? (
+                            <Skeleton height={14} width={80} display="inline-block" />
+                          ) : (
+                            city.details?.region || 'Data not available'
+                          )}
                         </Text>
                         <Link
                           to={`/country/${countryCode}/state/${encodeURIComponent(decodedStateName)}/city/${encodeURIComponent(
@@ -236,53 +261,10 @@ export default function StatePage() {
             title={`Media • ${decodedStateName}`}
             images={mediaQuery.data?.images || []}
             videos={mediaQuery.data?.videos || []}
+            isLoading={mediaQuery.isLoading}
           />
         </Tabs.Panel>
       </Tabs>
     </Stack>
-  )
-}
-'Data not available'
-                          )}
-                        </Text >
-                        <Text size="sm" c="dimmed">
-                          <IconWorld size={14} style={{ marginRight: 6 }} />
-                          Region:{' '}
-                          {cityDetailsQuery.isLoading ? (
-                            <Skeleton height={14} width={80} display="inline-block" />
-                          ) : (
-                            city.details?.region || 'Data not available'
-                          )}
-                        </Text>
-                        <Link
-                          to={`/country/${countryCode}/state/${encodeURIComponent(decodedStateName)}/city/${encodeURIComponent(
-                            city.name,
-                          )}`}
-                          className="inline-link"
-                        >
-                          <IconMapPin size={14} style={{ marginRight: 6 }} />
-                          View city details
-                        </Link>
-                      </Stack >
-                    </Paper >
-                  ))}
-                </SimpleGrid >
-              ) : (
-  <Text c="dimmed">Data not available</Text>
-)}
-            </Stack >
-          </Paper >
-        </Tabs.Panel >
-
-  <Tabs.Panel value="media" pt="md">
-    <MediaGallery
-      title={`Media • ${decodedStateName}`}
-      images={mediaQuery.data?.images || []}
-      videos={mediaQuery.data?.videos || []}
-      isLoading={mediaQuery.isLoading}
-    />
-  </Tabs.Panel>
-      </Tabs >
-    </Stack >
   )
 }

@@ -129,69 +129,28 @@ export default function CityPage() {
           <Paper className="glass-panel" p="lg" radius="md">
             <Stack gap="md">
               <Title order={3}>About City</Title>
-              <Text c="dimmed">{wikiQuery.isSuccess ? wikiQuery.data.summary : 'Data not available'}</Text>
+              {wikiQuery.isLoading ? (
+                <Stack gap="sm">
+                  <Skeleton height={14} radius="xl" />
+                  <Skeleton height={14} radius="xl" width="80%" />
+                  <Skeleton height={14} radius="xl" width="90%" />
+                </Stack>
+              ) : (
+                <Text c="dimmed">{wikiQuery.isSuccess ? wikiQuery.data.summary : 'Data not available'}</Text>
+              )}
               <Title order={4}>Background</Title>
-              <Text c="dimmed">{wikiQuery.isSuccess ? wikiQuery.data.history : 'Data not available'}</Text>
+              {wikiQuery.isLoading ? (
+                <Stack gap="sm">
+                  <Skeleton height={14} radius="xl" />
+                  <Skeleton height={14} radius="xl" />
+                  <Skeleton height={14} radius="xl" width="60%" />
+                </Stack>
+              ) : (
+                <Text c="dimmed">{wikiQuery.isSuccess ? wikiQuery.data.history : 'Data not available'}</Text>
+              )}
             </Stack>
           </Paper>
         </Tabs.Panel>
-        <Tabs.Panel value="insights" pt="md">
-          <Paper className="glass-panel" p="lg" radius="md">
-            <Stack gap="sm">
-              <Text>
-                <strong>City:</strong> {decodedCityName}
-              </Text>
-              <Text>
-                <strong>State:</strong> {decodedStateName}
-              </Text>
-              <Text>
-                <strong>Country:</strong> {country?.name?.common || 'Data not available'}
-              </Text>
-              <Text>
-                <strong>Population:</strong>{' '}
-                {city?.population ? city.population.toLocaleString() : 'Data not available'}
-              </Text>
-            </Stack>
-          </Paper>
-        </Tabs.Panel>
-
-        <Tabs.Panel value="media" pt="md">
-          <MediaGallery
-            title={`Media • ${decodedCityName}`}
-            images={mediaQuery.data?.images || []}
-            videos={mediaQuery.data?.videos || []}
-          />
-        </Tabs.Panel>
-      </Tabs>
-    </Stack>
-  )
-}
-{
-  wikiQuery.isLoading ? (
-    <Stack gap="sm">
-      <Skeleton height={14} radius="xl" />
-      <Skeleton height={14} radius="xl" width="80%" />
-      <Skeleton height={14} radius="xl" width="90%" />
-    </Stack>
-  ) : (
-  <Text c="dimmed">{wikiQuery.isSuccess ? wikiQuery.data.summary : 'Data not available'}</Text>
-)
-}
-<Title order={4}>Background</Title>
-{
-  wikiQuery.isLoading ? (
-    <Stack gap="sm">
-      <Skeleton height={14} radius="xl" />
-      <Skeleton height={14} radius="xl" />
-      <Skeleton height={14} radius="xl" width="60%" />
-    </Stack>
-  ) : (
-  <Text c="dimmed">{wikiQuery.isSuccess ? wikiQuery.data.history : 'Data not available'}</Text>
-)
-}
-            </Stack >
-          </Paper >
-        </Tabs.Panel >
         <Tabs.Panel value="insights" pt="md">
           <Paper className="glass-panel" p="lg" radius="md">
             <Stack gap="sm">
@@ -220,7 +179,7 @@ export default function CityPage() {
             isLoading={mediaQuery.isLoading}
           />
         </Tabs.Panel>
-      </Tabs >
-    </Stack >
+      </Tabs>
+    </Stack>
   )
 }

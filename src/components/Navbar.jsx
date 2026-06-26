@@ -92,9 +92,11 @@ export function Navbar() {
                   </Title>
                 </>
               ) : (
-                <Title order={2} size="h3">
-                  GeoScope
-                </Title>
+                <img 
+                  src="/geoscope-light.png" 
+                  alt="GeoScope Logo" 
+                  style={{ height: '44px', objectFit: 'contain' }}
+                />
               )}
             </motion.div>
           </AnimatePresence>

@@ -1,33 +1,4 @@
-const LIST_FIELDS = [
-  'name',
-  'flags',
-  'population',
-  'region',
-  'capital',
-  'subregion',
-  'languages',
-  'cca3',
-  'cca2',
-  'area',
-].join(',')
-
-const DETAILS_FIELDS = [
-  'name',
-  'flags',
-  'population',
-  'capital',
-  'region',
-  'subregion',
-  'languages',
-  'currencies',
-  'cca3',
-  'cca2',
-  'area',
-].join(',')
-
-const DETAILS_EXTRA_FIELDS = ['timezones', 'borders', 'maps'].join(',')
-
-const API_URL = `https://restcountries.com/v3.1/all?fields=${LIST_FIELDS}`
+const API_URL = '/countries.json';
 
 export async function fetchCountries() {
   const response = await fetch(API_URL)
@@ -43,25 +14,27 @@ export async function fetchCountries() {
 }
 
 export async function fetchCountryByCode(countryCode) {
-  const [baseResponse, extraResponse] = await Promise.all([
-    fetch(`https://restcountries.com/v3.1/alpha/${countryCode}?fields=${DETAILS_FIELDS}`),
-    fetch(`https://restcountries.com/v3.1/alpha/${countryCode}?fields=${DETAILS_EXTRA_FIELDS}`),
-  ])
-
-  if (!baseResponse.ok || !extraResponse.ok) {
+  const response = await fetch(API_URL)
+  if (!response.ok) {
     throw new Error('Failed to fetch country details. Please try again.')
   }
 
-  const [baseCountry, extraCountry] = await Promise.all([baseResponse.json(), extraResponse.json()])
+  const countries = await response.json()
+  const country = countries.find(c => c.cca2 === countryCode || c.cca3 === countryCode);
+  
+  if (!country) {
+    throw new Error('Country not found');
+  }
+
   console.info('[REST Countries API] country details response', {
     countryCode,
-    baseCountry,
-    extraCountry,
+    country,
   })
+  
   return {
-    ...baseCountry,
-    timezones: extraCountry.timezones || [],
-    borders: extraCountry.borders || [],
-    maps: extraCountry.maps || {},
+    ...country,
+    timezones: country.timezones || [],
+    borders: country.borders || [],
+    maps: country.maps || {},
   }
 }

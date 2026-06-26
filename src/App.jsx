@@ -33,7 +33,7 @@ function App() {
           }
         >
           <AnimatePresence mode="wait">
-            <Container size={1280} px={{ base: 'md', md: 'lg' }} py={{ base: 'sm', md: 'md' }} key={location.pathname}>
+            <Container size={1280} px={{ base: 16, md: 32 }} py={{ base: 'sm', md: 'md' }} key={location.pathname}>
               <PageTransition>
                 <Routes location={location}>
                   <Route path="/" element={<HomePage />} />
