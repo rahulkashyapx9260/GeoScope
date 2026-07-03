@@ -1,6 +1,6 @@
 import { Box, Group, Highlight, Text, Title } from '@mantine/core'
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
+import { TiltCard } from './TiltCard'
 import { IconArrowUpRight, IconUsers, IconBuilding } from '@tabler/icons-react'
 import { useUIStore } from '../store/useUIStore'
 import { parseSearchQuery } from '../utils/universalSearch'
@@ -39,7 +39,7 @@ export function SplitCountryCard({ country, index }) {
       }
       style={{ height: '100%' }}
     >
-      <Link
+      <TiltCard
         to={`/country/${country.cca3}`}
         className="premium-glass-card"
       >
@@ -83,7 +83,7 @@ export function SplitCountryCard({ country, index }) {
             </Group>
           </Box>
         </div>
-      </Link>
+      </TiltCard>
     </motion.div>
   )
 }

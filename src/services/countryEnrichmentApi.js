@@ -3,20 +3,46 @@ function pickTitle(countryName) {
 }
 
 export async function fetchWikipediaTopicContent(topic) {
-  const url = `https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&explaintext=1&titles=${pickTitle(
-    topic,
-  )}&origin=*`
-
-  const response = await fetch(url)
-  if (!response.ok) {
-    throw new Error('Wikipedia content is currently unavailable.')
+  let extract = ''
+  
+  try {
+    const url = `https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&explaintext=1&titles=${pickTitle(
+      topic,
+    )}&origin=*`
+    const response = await fetch(url)
+    if (response.ok) {
+      const data = await response.json()
+      const pages = data?.query?.pages || {}
+      const page = Object.values(pages)[0]
+      if (page && !page.missing && page.extract) {
+        extract = page.extract
+      }
+    }
+  } catch (err) {
+    console.warn('[Wikipedia API] First extract fetch failed:', err)
   }
 
-  const data = await response.json()
-  console.info('[Wikipedia API] topic content response', { topic, data })
-  const pages = data?.query?.pages || {}
-  const page = Object.values(pages)[0]
-  const extract = page?.extract || ''
+  // Fallback: If no extract was found and there is a comma (e.g. "Delhi, India"), try the base name (e.g. "Delhi")
+  if (!extract && topic.includes(',')) {
+    const fallbackTopic = topic.split(',')[0].trim()
+    try {
+      const url = `https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&explaintext=1&titles=${pickTitle(
+        fallbackTopic,
+      )}&origin=*`
+      const response = await fetch(url)
+      if (response.ok) {
+        const data = await response.json()
+        const pages = data?.query?.pages || {}
+        const page = Object.values(pages)[0]
+        if (page && !page.missing && page.extract) {
+          extract = page.extract
+          console.info('[Wikipedia API] Fallback extract succeeded for:', fallbackTopic)
+        }
+      }
+    } catch (err) {
+      console.warn('[Wikipedia API] Fallback extract fetch failed:', err)
+    }
+  }
 
   const paragraphs = extract
     .split('\n\n')
@@ -44,14 +70,39 @@ function pickBestImageSrc(item) {
 }
 
 export async function fetchWikipediaMedia(topic) {
-  const url = `https://en.wikipedia.org/api/rest_v1/page/media-list/${pickTitle(topic)}`
-  const response = await fetch(url)
-  if (!response.ok) {
-    throw new Error('Media is currently unavailable.')
+  let responseOk = false
+  let data = null
+
+  try {
+    const url = `https://en.wikipedia.org/api/rest_v1/page/media-list/${pickTitle(topic)}`
+    const response = await fetch(url)
+    if (response.ok) {
+      responseOk = true
+      data = await response.json()
+    }
+  } catch (err) {
+    console.warn('[Wikipedia REST] First media fetch failed:', err)
   }
 
-  const data = await response.json()
-  console.info('[Wikipedia REST] media-list response', { topic, data })
+  // Fallback: Try with only the base name if page/media is not found and has a comma
+  if (!responseOk && topic.includes(',')) {
+    const fallbackTopic = topic.split(',')[0].trim()
+    try {
+      const url = `https://en.wikipedia.org/api/rest_v1/page/media-list/${pickTitle(fallbackTopic)}`
+      const response = await fetch(url)
+      if (response.ok) {
+        responseOk = true
+        data = await response.json()
+        console.info('[Wikipedia REST] Fallback media succeeded for:', fallbackTopic)
+      }
+    } catch (err) {
+      console.warn('[Wikipedia REST] Fallback media fetch failed:', err)
+    }
+  }
+
+  if (!responseOk || !data) {
+    return { images: [], videos: [] }
+  }
 
   const items = Array.isArray(data?.items) ? data.items : []
   const images = items
@@ -78,6 +129,7 @@ export async function fetchWikipediaMedia(topic) {
 
   return { images, videos }
 }
+
 
 export async function fetchCountryCities(countryCode, countryName) {
   const rapidApiKey = import.meta.env.VITE_RAPIDAPI_KEY

@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { Link } from 'react-router-dom'
+import { TiltCard } from './TiltCard'
 import { Box, Group, Title, Text, ActionIcon } from '@mantine/core'
 import { IconArrowUpRight, IconUsers, IconRuler2, IconStar, IconMap } from '@tabler/icons-react'
 import { useUIStore } from '../store/useUIStore'
@@ -25,7 +25,7 @@ export function BentoGrid({ countries }) {
     // Random Pick
     const usedCodes = new Set([highestPop?.cca3, largestArea?.cca3, smallestArea?.cca3])
     const available = countries.filter(c => !usedCodes.has(c.cca3))
-    const randomPick = available[Math.floor(Math.random() * Math.min(available.length, 50))] || available[0]
+    const randomPick = available[10 % available.length] || available[0]
 
     return { highestPop, largestArea, smallestArea, randomPick }
   }, [countries])
@@ -37,7 +37,7 @@ export function BentoGrid({ countries }) {
   return (
     <Box className="bento-container" mb="xl">
       {/* 1. Largest Area (Medium - Wide) */}
-      <Link 
+      <TiltCard 
         to={`/country/${largestArea.cca3}`} 
         className="bento-card bento-wide"
         onMouseEnter={() => setHoveredCountry({ name: largestArea.name.common, flag: largestArea.flags.svg, code: largestArea.cca3 })}
@@ -62,10 +62,10 @@ export function BentoGrid({ countries }) {
             </Group>
           </Box>
         </div>
-      </Link>
+      </TiltCard>
 
       {/* 2. Most Populated (Large Block) */}
-      <Link 
+      <TiltCard 
         to={`/country/${highestPop.cca3}`} 
         className="bento-card bento-large"
         onMouseEnter={() => setHoveredCountry({ name: highestPop.name.common, flag: highestPop.flags.svg, code: highestPop.cca3 })}
@@ -89,11 +89,11 @@ export function BentoGrid({ countries }) {
             </Text>
           </Box>
         </div>
-      </Link>
+      </TiltCard>
 
       {/* 3. Smallest Area (Small Square) */}
       {smallestArea && (
-        <Link 
+        <TiltCard 
           to={`/country/${smallestArea.cca3}`} 
           className="bento-card bento-square"
           onMouseEnter={() => setHoveredCountry({ name: smallestArea.name.common, flag: smallestArea.flags.svg, code: smallestArea.cca3 })}
@@ -112,12 +112,12 @@ export function BentoGrid({ countries }) {
               </Text>
             </Box>
           </div>
-        </Link>
+        </TiltCard>
       )}
 
       {/* 4. Random Pick / Highlight (Small Square) */}
       {randomPick && (
-        <Link 
+        <TiltCard 
           to={`/country/${randomPick.cca3}`} 
           className="bento-card bento-square"
           onMouseEnter={() => setHoveredCountry({ name: randomPick.name.common, flag: randomPick.flags.svg, code: randomPick.cca3 })}
@@ -136,7 +136,7 @@ export function BentoGrid({ countries }) {
               </Text>
             </Box>
           </div>
-        </Link>
+        </TiltCard>
       )}
     </Box>
   )

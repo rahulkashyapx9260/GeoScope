@@ -11,7 +11,8 @@
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease;
+  transform-style: preserve-3d;
 }
 
 [data-mantine-color-scheme='dark'] .premium-glass-card {
@@ -20,14 +21,14 @@
 }
 
 .premium-glass-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
-  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 20px 20px 40px rgba(0, 0, 0, 0.12), -1px -1px 0 rgba(255, 255, 255, 0.4);
+  border-color: rgba(255, 255, 255, 0.5);
+  z-index: 5;
 }
 
 [data-mantine-color-scheme='dark'] .premium-glass-card:hover {
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
-  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 20px 20px 40px rgba(0, 0, 0, 0.5), -1px -1px 0 rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 .premium-glass-banner {
@@ -56,6 +57,12 @@
   flex-direction: column;
   color: var(--mantine-color-text);
   background: inherit;
+  transform: translateZ(20px);
+  transition: transform 0.4s ease;
+}
+
+.premium-glass-card:hover .premium-glass-content {
+  transform: translateZ(40px);
 }
 
 .premium-glass-action {

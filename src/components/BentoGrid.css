@@ -19,12 +19,14 @@
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 24px;
-  transition: transform 0.3s ease, border-color 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.4s ease, box-shadow 0.4s ease;
+  transform-style: preserve-3d;
 }
 
 .bento-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(255, 255, 255, 0.5);
+  border-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 24px 24px 48px rgba(0, 0, 0, 0.4), -1px -1px 0 rgba(255, 255, 255, 0.2);
+  z-index: 10;
 }
 
 .bento-card-bg {
@@ -53,6 +55,12 @@
   z-index: 2;
   padding: 24px;
   text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  transform: translateZ(30px);
+  transition: transform 0.4s ease;
+}
+
+.bento-card:hover .bento-card-content {
+  transform: translateZ(50px);
 }
 
 .bento-large {

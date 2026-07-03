@@ -1,11 +1,9 @@
-import { Box, useMantineTheme } from '@mantine/core'
+import { Box } from '@mantine/core'
 import { Navbar } from '../components/Navbar'
 import { Footer } from '../components/Footer'
 import { AnimatedBackground } from '../components/AnimatedBackground'
 
 export function AppLayout({ children }) {
-  const theme = useMantineTheme()
-
   return (
     <Box mih="100vh" className="app-shell" pos="relative" style={{ overflow: 'clip' }}>
       <AnimatedBackground />

@@ -18,7 +18,7 @@ const POI_DATA = [
   { name: 'Burj Khalifa', lat: 25.1972, lng: 55.2744, code: 'ARE', color: '#8b5cf6' },
   { name: 'Chichen Itza', lat: 20.6843, lng: -88.5678, code: 'MEX', color: '#f59e0b' },
   { name: 'Petra', lat: 30.3285, lng: 35.4444, code: 'JOR', color: '#f59e0b' },
-  { name: 'Mount Fuji', lat: 35.3606, lng: 138.7274, code: 'JPN', color: '#ec4899' },
+  { name: 'Mount Fuji', lat: 35.3606, lng: 138.7274, code: 'JPN', color: '#0ea5e9' },
   { name: 'Stonehenge', lat: 51.1789, lng: -1.8262, code: 'GBR', color: '#94a3b8' },
   { name: 'Niagara Falls', lat: 43.0962, lng: -79.0377, code: 'CAN', color: '#06b6d4' },
   { name: 'Grand Canyon', lat: 36.1069, lng: -112.1129, code: 'USA', color: '#ea580c' },

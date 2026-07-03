@@ -82,10 +82,29 @@ body {
 }
 
 .gradient-text {
-  background: linear-gradient(130deg, #4f46e5 0%, #6366f1 35%, #7c3aed 100%);
+  background: linear-gradient(270deg, #4f46e5, #06b6d4, #7c3aed, #4f46e5);
+  background-size: 300% 300%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  animation: textShimmer 8s ease infinite;
+}
+
+@keyframes textShimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.floating-text-container {
+  animation: floatText 6s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+@keyframes floatText {
+  0% { transform: translateY(0px) rotateX(0deg); }
+  50% { transform: translateY(-8px) rotateX(3deg); }
+  100% { transform: translateY(0px) rotateX(0deg); }
 }
 
 .filter-input,
@@ -136,6 +155,12 @@ body {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important;
 }
 
+/* Make checkmark blue for selected items in filters */
+.mantine-Select-dropdown [data-selected] svg,
+.mantine-Combobox-dropdown [data-selected] svg {
+  color: #3b82f6 !important;
+}
+
 .filter-input:focus-within,
 .filter-select:focus-within {
   transform: translateY(-1px);
@@ -166,7 +191,7 @@ body {
   background: rgba(255, 255, 255, 0.02) !important;
   backdrop-filter: blur(16px) !important;
   -webkit-backdrop-filter: blur(16px) !important;
-  transition: box-shadow 0.24s ease, backdrop-filter 0.24s ease, background-color 0.24s ease;
+  transition: backdrop-filter 0.24s ease, background-color 0.24s ease;
 }
 
 [data-mantine-color-scheme='dark'] .top-navbar {
@@ -175,7 +200,6 @@ body {
 }
 
 .top-navbar[data-scrolled='true'] {
-  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
   background: rgba(255, 255, 255, 0.05) !important;
 }
 

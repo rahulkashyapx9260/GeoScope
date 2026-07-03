@@ -73,11 +73,20 @@ export default function HomePage() {
       >
         <SimpleGrid cols={{ base: 1, md: 2 }} spacing="xl" style={{ alignItems: 'center' }}>
           <Stack gap="md" justify="center" h="100%">
-            <Title className="hero-title" order={1} fz={{ base: 34, md: 56 }}>
-              The World Context
-              <br />
-              <span className="gradient-text">Beautifully. Instantly.</span>
-            </Title>
+            <motion.div
+              initial={{ opacity: 0, rotateX: -40, y: 40, scale: 0.9 }}
+              animate={{ opacity: 1, rotateX: 0, y: 0, scale: 1 }}
+              transition={{ duration: 0.8, type: 'spring', bounce: 0.5 }}
+              style={{ transformStyle: 'preserve-3d', perspective: 1000 }}
+            >
+              <div className="floating-text-container">
+                <Title className="hero-title" order={1} fz={{ base: 34, md: 56 }}>
+                  The World Context
+                  <br />
+                  <span className="gradient-text">Beautifully. Instantly.</span>
+                </Title>
+              </div>
+            </motion.div>
             <Text c="dimmed" maw={620}>
               Interact with the globe and browse countries by region, population, and capital with a clean global explorer.
             </Text>
@@ -88,7 +97,7 @@ export default function HomePage() {
                 size="md"
                 radius="xl"
                 variant="gradient"
-                gradient={{ from: 'indigo', to: 'grape' }}
+                gradient={{ from: 'indigo', to: 'cyan' }}
               >
                 Explore Countries
               </Button>
